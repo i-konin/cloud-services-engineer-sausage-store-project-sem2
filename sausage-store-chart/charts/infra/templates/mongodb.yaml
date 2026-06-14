@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
-  annotations:
-    helm.sh/hook-weight: "-5"
+  namespace: {{ .Release.Namespace }}
 spec:
   serviceName: mongodb
   replicas: 1
@@ -18,13 +17,13 @@ spec:
       containers:
       - name: mongodb
         image: {{ .Values.mongodb.image }}
-        imagePullPolicy: {{ .Values.global.imagePullPolicy }}
         envFrom:
           - configMapRef:
               name: mongodb-conf
         ports:
         - containerPort: {{ .Values.mongodb.containerPort }}
-        resources: {{ toYaml .Values.mongodb.resources | indent 12 }}
+        resources:
+{{ toYaml .Values.mongodb.resources | nindent 10 }}
         volumeMounts:
         - name: mongodb-data
           mountPath: /data/db
@@ -41,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongodb
+  namespace: {{ .Release.Namespace }}
   labels:
     app: mongodb
 spec:
@@ -55,9 +55,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongodb-conf
-  annotations:
-    helm.sh/hook-weight: "-5"
+  namespace: {{ .Release.Namespace }}
 data:
   MONGO_INITDB_ROOT_USERNAME: {{ .Values.mongodb.env.MONGO_INITDB_ROOT_USERNAME }}
   MONGO_INITDB_ROOT_PASSWORD: {{ .Values.mongodb.env.MONGO_INITDB_ROOT_PASSWORD }}
-  MONGO_INITDB_DATABASE: {{ .Values.mongodb.env.MONGO_INITDB_DATABASE | quote }}
