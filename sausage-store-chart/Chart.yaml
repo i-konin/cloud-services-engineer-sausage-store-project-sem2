@@ -8,15 +8,15 @@ version: 0.1.2
 appVersion: "latest"
 
 dependencies:
-  - name: backend
-    version: 0.1.0
-    repository: file://./charts/backend
-  - name: backend-report
-    version: 0.1.1
-    repository: file://./charts/backend-report
-  - name: frontend
-    version: 0.1.0
-    repository: file://./charts/frontend
-  - name: infra
-    version: 0.1.0
-    repository: file://./charts/infra
+- name: backend
+  repository: file://./charts/backend
+  version: 0.1.0
+- name: backend-report
+  repository: file://./charts/backend-report
+  version: 0.1.1
+- name: frontend
+  repository: file://./charts/frontend
+  version: 0.1.0
+- name: infra
+  repository: file://./charts/infra
+  version: 0.1.0
