@@ -112,7 +112,7 @@ jobs:
         - name: Install Helm
           uses: azure/setup-helm@v4
         - name: Setup kubeconfig
-          run: echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
+          run: printf "%s" "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
         - name: Add Nexus Helm repo
           run: |
             helm repo add nexus ${{ env.NEXUS_HELM_REPO }} \
