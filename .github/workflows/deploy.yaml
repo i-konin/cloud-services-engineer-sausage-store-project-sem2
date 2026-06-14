@@ -122,12 +122,6 @@ jobs:
               --username ${{ env.NEXUS_HELM_REPO_USER }} \
               --password ${{ env.NEXUS_HELM_REPO_PASSWORD }}
             helm repo update
-        - name: Debug kubeconfig content
-          run: |
-            echo "--- Содержимое файла ./kubeconfig ---"
-            head -n 5 ./kubeconfig
-            echo "------------------------------------"
-            ls -l ./kubeconfig
         - name: Deploy with Helm
           run: |
             envsubst < ./sausage-store-chart/values.yaml > ./values-resolved.yaml
