@@ -47,6 +47,7 @@ spec:
               - key: {{ .Values.nginxConf }}
                 path: {{ .Values.nginxConf }} 
 
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -61,4 +62,4 @@ spec:
       protocol: TCP
       targetPort: {{ .Values.service.port }}
   selector:
-    app: sausage-store-frontend
+    app: {{ .Release.Name }}-{{ .Chart.Name }}
